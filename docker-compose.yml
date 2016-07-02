@@ -1,0 +1,18 @@
+version: '2'
+services:
+  controller:
+    image: hsnl/snort-integration
+    ports:
+      - "6633:6633"
+      - "8080:8080"
+  web:
+    image: hsnl/snort-io
+    ports:
+      - "9292:9292"
+  snort:
+    image: hsnl/snort-alert-driver
+    network_mode: host
+    environment:
+      - DEVICE=eth0
+      - CONTROLLER_HOST=http://192.168.2.151:8080
+      - WEB_HOST=http://192.168.2.151:9292
